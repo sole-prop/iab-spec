@@ -75,7 +75,7 @@
   <!-- ==================== LEFT PANEL: CODE EDITOR ==================== -->
   <g transform="translate(30, 40)">
     <!-- Glassmorphic Window Base -->
-    <rect width="340" height="320" rx="8" fill="#0d1527" fill-opacity="0.8" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="340" height="330" rx="8" fill="#0d1527" fill-opacity="0.8" stroke="#1e293b" stroke-width="1.5" />
     
     <!-- Window Header -->
     <path d="M0 8 A8 8 0 0 1 8 0 L332 0 A8 8 0 0 1 340 8 L340 30 L0 30 Z" fill="#0b0f19" stroke="#1e293b" stroke-width="0" />
@@ -130,28 +130,28 @@
   <!-- ==================== RIGHT PANEL: TOPOLOGY GRAPH ==================== -->
   <g transform="translate(430, 40)">
     <!-- Graph Base Container -->
-    <rect width="340" height="320" rx="8" fill="#0d1527" fill-opacity="0.8" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="340" height="330" rx="8" fill="#0d1527" fill-opacity="0.8" stroke="#1e293b" stroke-width="1.5" />
     
     <!-- Title -->
     <text x="20" y="30" fill="#f8fafc" font-size="12" font-weight="600" letter-spacing="0.5">COMPILED BLUEPRINT MODEL</text>
     
     <!-- Connection Lines (Dashed Glowing Paths) -->
     <!-- Organization to Agent -->
-    <path d="M 170 85 L 75 160" stroke="#00f2fe" stroke-width="2" stroke-dasharray="4,4" opacity="0.8" />
+    <path d="M 170 55 L 80 140" stroke="#00f2fe" stroke-width="2" stroke-dasharray="4,4" opacity="0.8" />
     <!-- Organization to Human -->
-    <path d="M 170 85 L 265 160" stroke="#fb923c" stroke-width="2" stroke-dasharray="4,4" opacity="0.8" />
-    <!-- Agent to Workflow -->
-    <path d="M 75 160 L 75 250" stroke="#a855f7" stroke-width="2" opacity="0.8" filter="url(#glowPurple)" />
-    <!-- Human to Workflow Step -->
-    <path d="M 265 160 L 75 250" stroke="#fb923c" stroke-dasharray="3,3" stroke-width="1.5" opacity="0.6" />
-    <!-- Workflow to Goal -->
-    <path d="M 75 250 L 170 250" stroke="#34d399" stroke-width="2.5" opacity="0.8" filter="url(#glowEmerald)" />
-    <!-- Goal to Organization -->
-    <path d="M 170 250 L 170 85" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5,5" opacity="0.5" />
+    <path d="M 170 55 L 260 140" stroke="#fb923c" stroke-width="2" stroke-dasharray="4,4" opacity="0.8" />
+    <!-- Agent to Workflows -->
+    <path d="M 80 140 L 170 225" stroke="#a855f7" stroke-width="2" opacity="0.8" filter="url(#glowPurple)" />
+    <!-- Human to Workflows (SLA Bottlenecked Path) -->
+    <path d="M 260 140 L 170 225" stroke="#ef4444" stroke-width="2.5" opacity="0.8" filter="url(#glowPurple)" />
+    <!-- Workflows to Goals -->
+    <path d="M 170 225 L 170 295" stroke="#34d399" stroke-width="2.5" opacity="0.8" filter="url(#glowEmerald)" />
+    <!-- Goals to Organization (Gracefully Curved Feedback Loop) -->
+    <path d="M 152 295 C 25 295, 25 55, 148 55" stroke="#34d399" stroke-width="1.5" stroke-dasharray="5,5" fill="none" opacity="0.6" filter="url(#glowEmerald)" />
 
     <!-- NODES -->
     <!-- 1. Root Node: Organization -->
-    <g transform="translate(170, 85)">
+    <g transform="translate(170, 55)">
       <circle r="22" fill="url(#bgGrad)" stroke="#00f2fe" stroke-width="2" filter="url(#glowCyan)"/>
       <rect x="-10" y="-10" width="20" height="20" fill="none" />
       <!-- Building Icon inside -->
@@ -160,7 +160,7 @@
     </g>
 
     <!-- 2. Agent Node -->
-    <g transform="translate(75, 160)">
+    <g transform="translate(80, 140)">
       <circle r="18" fill="url(#bgGrad)" stroke="#a855f7" stroke-width="2" filter="url(#glowPurple)"/>
       <!-- CPU/Brain Icon inside -->
       <rect x="-6" y="-6" width="12" height="12" rx="1.5" fill="none" stroke="#a855f7" stroke-width="1.5" />
@@ -172,7 +172,7 @@
     </g>
 
     <!-- 3. Human Actor Node -->
-    <g transform="translate(265, 160)">
+    <g transform="translate(260, 140)">
       <circle r="18" fill="url(#bgGrad)" stroke="#fb923c" stroke-width="2" filter="url(#glowOrange)"/>
       <!-- User Profile Icon inside -->
       <circle cx="0" cy="-3" r="4.5" fill="none" stroke="#fb923c" stroke-width="1.5" />
@@ -180,9 +180,9 @@
       <text x="0" y="32" fill="#cbd5e1" font-size="10" text-anchor="middle">Human Core</text>
     </g>
 
-    <!-- 4. Workflow Node -->
-    <g transform="translate(75, 250)">
-      <circle r="18" fill="url(#bgGrad)" stroke="#a855f7" stroke-width="2" />
+    <!-- 4. Workflows Node -->
+    <g transform="translate(170, 225)">
+      <circle r="18" fill="url(#bgGrad)" stroke="#a855f7" stroke-width="2" filter="url(#glowPurple)" />
       <!-- Workflow Cycle Icon inside -->
       <path d="M -5 -2 A 6 6 0 1 1 5 4" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round" />
       <polygon points="5,1 5,6 0,5" fill="#a855f7" />
@@ -190,21 +190,21 @@
     </g>
 
     <!-- 5. Goals/OKRs Node -->
-    <g transform="translate(170, 250)">
+    <g transform="translate(170, 295)">
       <circle r="18" fill="url(#bgGrad)" stroke="#34d399" stroke-width="2" filter="url(#glowEmerald)"/>
       <!-- Target/Bullseye Icon inside -->
       <circle cx="0" cy="0" r="7" fill="none" stroke="#34d399" stroke-width="1.5" />
       <circle cx="0" cy="0" r="2" fill="#34d399" />
-      <text x="0" y="32" fill="#cbd5e1" font-size="10" text-anchor="middle">OKRs / Goals</text>
+      <text x="0" y="30" fill="#cbd5e1" font-size="10" text-anchor="middle">OKRs / Goals</text>
     </g>
 
-    <!-- Interactive Bottleneck Alert Badge -->
-    <g transform="translate(130, 160)">
+    <!-- Interactive Bottleneck Alert Badge (Positioned on the Human -> Workflows line) -->
+    <g transform="translate(215, 182.5)">
       <rect x="-40" y="-10" width="80" height="20" rx="4" fill="#ef4444" fill-opacity="0.15" stroke="#ef4444" stroke-width="1" />
       <text x="0" y="4" fill="#fca5a5" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="0.3">⚠ SLA EXCEEDED</text>
     </g>
   </g>
 
   <!-- Central Connecting Divider -->
-  <line x1="400" y1="60" x2="400" y2="340" stroke="#1e293b" stroke-width="1" stroke-dasharray="4,4" />
+  <line x1="400" y1="60" x2="400" y2="350" stroke="#1e293b" stroke-width="1" stroke-dasharray="4,4" />
 </svg>
