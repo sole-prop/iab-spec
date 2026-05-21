@@ -1,8 +1,14 @@
+<div align="center">
+
 # IaO (Infrastructure-as-Organization) Protocol Standard
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![Protocol Version](https://img.shields.io/badge/IaO%20Protocol-v1.0-orange.svg)](schema/org.iab.schema.json)
 [![Standard Ecosystem](https://img.shields.io/badge/Ecosystem-Sovereign%20Core-green.svg)](https://github.com/abhisar-ps/sovereign-core)
+
+![IaO Standard Banner](assets/banner.svg)
+
+</div>
 
 The **Infrastructure-as-Organization (IaO) Protocol** is an open, version-controlled declarative standard for describing how organizations operate. Just as `docker-compose.yml` defines how application services interact, an `org.iab.yml` blueprint defines how human actors, AI agents, recurring workflows, organizational goals, and external integrations coordinate to produce business outcomes.
 

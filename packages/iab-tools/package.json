@@ -1,0 +1,42 @@
+{
+  "name": "iab-tools",
+  "version": "0.1.0",
+  "description": "CLI tools for the IaO (Infrastructure-as-Organization) Protocol",
+  "bin": {
+    "iab-validate": "./dist/validate.js",
+    "iab-init": "./dist/init.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "ajv": "^6.12.6",
+    "js-yaml": "^4.1.0",
+    "inquirer": "^9.2.12",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^22.0.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/inquirer": "^9.0.7",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhisar-ps/iab-spec"
+  }
+}

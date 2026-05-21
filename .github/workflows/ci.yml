@@ -1,0 +1,49 @@
+name: IaO Standard CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        cache-dependency-path: 'packages/iab-tools/package-lock.json'
+
+    - name: Install dependencies
+      run: |
+        cd packages/iab-tools
+        npm ci
+
+    - name: Compile CLI Tooling
+      run: |
+        cd packages/iab-tools
+        npm run build
+
+    - name: Execute CLI Validation Test Suite
+      run: |
+        cd packages/iab-tools
+        npm test
+
+    - name: Verify Education Example Blueprint
+      run: |
+        node packages/iab-tools/dist/validate.js examples/education.iab.yml
+
+    - name: Verify SaaS Startup Example Blueprint
+      run: |
+        node packages/iab-tools/dist/validate.js examples/startup.iab.yml
+
+    - name: Verify Creative Agency Example Blueprint
+      run: |
+        node packages/iab-tools/dist/validate.js examples/agency.iab.yml
