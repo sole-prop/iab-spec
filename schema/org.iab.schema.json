@@ -1,0 +1,345 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://iab-spec.dev/schema/v1.0/org.iab.schema.json",
+  "title": "IaO Blueprint v1.0",
+  "description": "Declarative organizational structure validation schema",
+  "type": "object",
+  "required": ["version", "organization"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "IaO Protocol specification version (e.g. '1.0')"
+    },
+    "organization": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the organization"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["startup", "smb", "education", "ngo", "agency", "enterprise", "other"],
+          "description": "The operating category of the organization"
+        },
+        "size": {
+          "type": "string",
+          "enum": ["1-10", "10-50", "50-200", "200-1000", "1000+"],
+          "description": "The approximate number of human members and agent nodes"
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed summary of the organization's business purpose"
+        },
+        "location": {
+          "type": "string",
+          "description": "Primary operating geographical headquarters"
+        },
+        "primary_language": {
+          "type": "string",
+          "description": "ISO 639-1 two-character language code (e.g. 'en', 'hi')"
+        },
+        "compiled_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this blueprint was compiled"
+        },
+        "confidence_score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Extraction confidence index (0.0 to 1.0) set by the Compiler"
+        },
+        "iab_source": {
+          "type": "string",
+          "enum": ["compiled", "manual", "hybrid"],
+          "description": "Determines how the blueprint was originally authored"
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "role"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the agent"
+          },
+          "name": {
+            "type": "string",
+            "description": "Friendly display name for the agent"
+          },
+          "role": {
+            "type": "string",
+            "description": "System role description backplaning the agent"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed explanation of duties and operational bounds"
+          },
+          "framework": {
+            "type": "string",
+            "enum": ["langraph", "crewai", "antigravity", "openai", "sovereign", "custom"],
+            "description": "The orchestration framework powering this agent node"
+          },
+          "model": {
+            "type": "string",
+            "description": "The primary LLM model backing the node"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "idle", "failed", "paused"],
+            "description": "Current lifecycle state of the node"
+          },
+          "kpi": {
+            "type": "object",
+            "required": ["metric", "target", "period"],
+            "properties": {
+              "metric": { "type": "string" },
+              "target": { "type": "number" },
+              "current": { "type": "number" },
+              "period": { "type": "string" },
+              "unit": { "type": "string" }
+            }
+          },
+          "owns": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Workflows owned/managed by this agent"
+          },
+          "reports_to": {
+            "type": "string",
+            "description": "Parent entity ID (agent or person) this node reports to"
+          },
+          "memory_scope": {
+            "type": "string",
+            "enum": ["agent", "team", "org"],
+            "description": "Transactive memory isolation boundary"
+          }
+        }
+      }
+    },
+    "people": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the human"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full name of the human"
+          },
+          "role": {
+            "type": "string",
+            "description": "Job title or corporate function"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address"
+          },
+          "communication_channels": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Available chat tools (e.g. ['whatsapp', 'email'])"
+          },
+          "owns": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Workflows owned/managed by this person"
+          },
+          "reports_to": {
+            "type": "string",
+            "description": "ID of manager"
+          },
+          "decision_authority": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Scope of decisions delegated to this person"
+          }
+        }
+      }
+    },
+    "workflows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the workflow"
+          },
+          "name": {
+            "type": "string",
+            "description": "Readable workflow process name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Short summary of what the process achieves"
+          },
+          "state": {
+            "type": "string",
+            "enum": ["active", "blocked", "completed", "paused", "unknown"],
+            "description": "Overall workflow state"
+          },
+          "current_bottleneck": {
+            "type": "string",
+            "description": "ID of the step currently slowing down executions"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Entity ID owning the workflow as a whole"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name"],
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "owner": { "type": "string" },
+                "channel": { "type": "string" },
+                "avg_duration_hours": { "type": "number" },
+                "threshold_hours": { "type": "number" }
+              }
+            }
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "reason"],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Workflow ID that is blocked by this workflow"
+                },
+                "reason": { "type": "string" }
+              }
+            }
+          },
+          "contributes_to": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "weight"],
+              "properties": {
+                "id": { "type": "string", "description": "Goal ID contributed to" },
+                "weight": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "maximum": 1.0,
+                  "description": "Contribution weight (0.0 to 1.0)"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the OKR/goal"
+          },
+          "title": {
+            "type": "string",
+            "description": "The target objective summary"
+          },
+          "metric": {
+            "type": "string",
+            "description": "Numeric or qualitative tracked KPI name"
+          },
+          "target_value": {
+            "type": "number",
+            "description": "Target KPI baseline score"
+          },
+          "current_value": {
+            "type": "number",
+            "description": "Current KPI baseline score"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Value unit description (e.g. 'students', 'USD')"
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date",
+            "description": "Target date for objective completion"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner ID responsible for this OKR"
+          },
+          "health": {
+            "type": "string",
+            "enum": ["on_track", "at_risk", "behind", "unknown"],
+            "description": "Current objective convergence health"
+          },
+          "health_reason": {
+            "type": "string",
+            "description": "Explicit rationale explaining health metrics"
+          },
+          "milestones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["date", "target", "status"],
+              "properties": {
+                "date": { "type": "string", "format": "date" },
+                "target": { "type": "number" },
+                "status": { "type": "string", "enum": ["on_track", "at_risk", "behind", "not_started", "completed"] }
+              }
+            }
+          }
+        }
+      }
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique adapter identifier"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["whatsapp", "excel", "notion", "slack", "git", "none"],
+            "description": "The category of external data pipeline hook"
+          },
+          "description": { "type": "string" },
+          "path": { "type": "string" },
+          "sheet": { "type": "string" },
+          "workspace_id": { "type": "string" },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": { "type": "string" },
+                "id": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

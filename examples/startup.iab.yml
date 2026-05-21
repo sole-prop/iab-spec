@@ -1,0 +1,192 @@
+# org.iab.yml — AI SaaS Startup Blueprint
+# Generated with IaO Standard v1.0
+version: "1.0"
+
+organization:
+  name: "VectraFlow AI"
+  type: "startup"
+  size: "10-50"
+  description: "B2B cognitive workflow engine builder"
+  location: "Bengaluru, India"
+  primary_language: "en"
+  iab_source: "manual"
+
+people:
+  - id: abhisar-ceo
+    name: "Abhisar Pratap Singh"
+    role: "CEO & Founder"
+    email: "abhisar@vectraflow.ai"
+    communication_channels: [slack, email]
+    owns: [strategic-planning]
+    decision_authority: [product_roadmap, capital_allocation, hiring]
+
+  - id: priya-cto
+    name: "Priya Nair"
+    role: "CTO"
+    email: "priya@vectraflow.ai"
+    communication_channels: [slack, email, github]
+    reports_to: abhisar-ceo
+    owns: [infrastructure-deployment]
+    decision_authority: [tech_stack_selection, cloud_budget]
+
+  - id: rahul-head-growth
+    name: "Rahul Sen"
+    role: "Head of Growth"
+    email: "rahul@vectraflow.ai"
+    communication_channels: [slack, email, whatsapp]
+    reports_to: abhisar-ceo
+    owns: [lead-generation]
+    decision_authority: [ad_spend_approval]
+
+agents:
+  - id: product-agent
+    name: "PROD-BOT"
+    role: "AI Product Analyst"
+    framework: "sovereign"
+    model: "claude-sonnet-4-20250514"
+    status: "active"
+    kpi:
+      metric: "user_stories_written"
+      target: 20
+      current: 18
+      period: "week"
+      unit: "stories"
+    owns: [feature-development]
+    reports_to: abhisar-ceo
+    memory_scope: "team"
+
+  - id: engineering-agent
+    name: "DEV-BOT"
+    role: "AI Senior Engineer"
+    framework: "langraph"
+    model: "claude-sonnet-4-20250514"
+    status: "active"
+    kpi:
+      metric: "pull_requests_merged"
+      target: 15
+      current: 12
+      period: "week"
+      unit: "PRs"
+    owns: [feature-development]
+    reports_to: priya-cto
+    memory_scope: "agent"
+
+  - id: growth-agent
+    name: "GROWTH-BOT"
+    role: "AI SDR Specialist"
+    framework: "crewai"
+    model: "gpt-4o"
+    status: "active"
+    kpi:
+      metric: "outbound_emails_sent"
+      target: 200
+      current: 175
+      period: "week"
+      unit: "emails"
+    owns: [lead-generation]
+    reports_to: rahul-head-growth
+    memory_scope: "org"
+
+workflows:
+  - id: feature-development
+    name: "Product Feature Delivery Workflow"
+    description: "End-to-end sprint process from story writing to deployment"
+    state: "active"
+    owner: product-agent
+    steps:
+      - id: write_specs
+        name: "Write Product Spec"
+        owner: product-agent
+        channel: slack
+        avg_duration_hours: 2
+      - id: build_code
+        name: "Build and Test Code"
+        owner: engineering-agent
+        channel: github
+        avg_duration_hours: 18
+        threshold_hours: 24
+      - id: code_review
+        name: "Security & QA Review"
+        owner: priya-cto
+        channel: github
+        avg_duration_hours: 4
+        threshold_hours: 8
+      - id: deploy
+        name: "Production Deployment"
+        owner: priya-cto
+        channel: github
+        avg_duration_hours: 0.5
+
+  - id: lead-generation
+    name: "B2B Outbound Lead Nurturing"
+    description: "Prospect scouting and personalized cold email sequences"
+    state: "active"
+    owner: growth-agent
+    steps:
+      - id: prospect_scraping
+        name: "Scout Target Profiles"
+        owner: growth-agent
+        channel: email
+        avg_duration_hours: 3
+      - id: copy_generation
+        name: "Generate Personalized Copy"
+        owner: growth-agent
+        channel: email
+        avg_duration_hours: 1
+      - id: manual_review
+        name: "Review Cold Outreach Copy"
+        owner: rahul-head-growth
+        channel: slack
+        avg_duration_hours: 12
+        threshold_hours: 24
+      - id: email_outbound
+        name: "Send Outbound Sequences"
+        owner: growth-agent
+        channel: email
+        avg_duration_hours: 0.2
+
+  - id: strategic-planning
+    name: "Executive OKR Review"
+    description: "Monthly strategic evaluation"
+    state: "active"
+    owner: abhisar-ceo
+    steps:
+      - id: metrics_collection
+        name: "Gather Department KPIs"
+        owner: product-agent
+        channel: slack
+        avg_duration_hours: 4
+      - id: executive_review
+        name: "Strategic Direction Realignment"
+        owner: abhisar-ceo
+        channel: email
+        avg_duration_hours: 2
+
+goals:
+  - id: revenue-goal
+    title: "$50K Monthly Recurring Revenue (MRR)"
+    metric: "mrr_usd"
+    target_value: 50000
+    current_value: 38200
+    unit: "USD"
+    deadline: "2026-09-30"
+    owner: abhisar-ceo
+    health: "on_track"
+
+  - id: churn-goal
+    title: "Keep User Churn Below 3%"
+    metric: "churn_rate"
+    target_value: 3
+    current_value: 2.4
+    unit: "percentage"
+    deadline: "2026-12-31"
+    owner: abhisar-ceo
+    health: "on_track"
+
+integrations:
+  - id: slack-workspace
+    type: "slack"
+    description: "Primary workspace chat communication"
+  - id: github-repos
+    type: "git"
+    description: "Source code control plane"

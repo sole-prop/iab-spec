@@ -1,0 +1,163 @@
+# org.iab.yml — Creative Marketing Agency Blueprint
+# Generated with IaO Standard v1.0
+version: "1.0"
+
+organization:
+  name: "ChromaCreative Studio"
+  type: "agency"
+  size: "10-50"
+  description: "High-performance digital design and branding agency"
+  location: "Mumbai, India"
+  primary_language: "en"
+  iab_source: "manual"
+
+people:
+  - id: kabir-creative-director
+    name: "Kabir Sen"
+    role: "Creative Director"
+    email: "kabir@chromacreative.co"
+    communication_channels: [slack, email]
+    owns: [creative-review]
+    decision_authority: [design_standards, brand_signoff]
+
+  - id: ananya-account-manager
+    name: "Ananya Roy"
+    role: "Lead Account Manager"
+    email: "ananya@chromacreative.co"
+    communication_channels: [slack, email, whatsapp]
+    owns: [brief-intake, client-approval]
+    decision_authority: [client_contracts, pricing_tiers]
+
+  - id: human-designer
+    name: "Vikram Malhotra"
+    role: "Senior Illustrator"
+    email: "vikram@chromacreative.co"
+    communication_channels: [slack, email]
+    reports_to: kabir-creative-director
+
+agents:
+  - id: designer-agent
+    name: "DESIGN-BOT"
+    role: "AI Creative Assistant"
+    framework: "sovereign"
+    model: "claude-sonnet-4-20250514"
+    status: "active"
+    kpi:
+      metric: "mockups_rendered"
+      target: 30
+      current: 28
+      period: "week"
+      unit: "mockups"
+    owns: [creative-review]
+    reports_to: kabir-creative-director
+    memory_scope: "team"
+
+  - id: copywriter-agent
+    name: "COPY-BOT"
+    role: "AI Copywriter"
+    framework: "crewai"
+    model: "gpt-4o"
+    status: "active"
+    kpi:
+      metric: "campaign_ad_sets_drafted"
+      target: 10
+      current: 9
+      period: "week"
+      unit: "ad_sets"
+    owns: [creative-review]
+    reports_to: kabir-creative-director
+    memory_scope: "team"
+
+workflows:
+  - id: brief-intake
+    name: "Client Brief Intake & Onboarding"
+    description: "Accepting brand requirements and scoping deliverables"
+    state: "active"
+    owner: ananya-account-manager
+    steps:
+      - id: receive_brief
+        name: "Receive Creative Brief"
+        owner: ananya-account-manager
+        channel: whatsapp
+        avg_duration_hours: 1
+      - id: scope_work
+        name: "Scope Work and Deliverables"
+        owner: ananya-account-manager
+        channel: email
+        avg_duration_hours: 4
+
+  - id: creative-review
+    name: "Asset Creation and Creative Verification"
+    description: "Parallel copywriting and design generation with Creative Director validation"
+    state: "active"
+    owner: kabir-creative-director
+    steps:
+      - id: generate_copy
+        name: "Draft Campaign Headlines"
+        owner: copywriter-agent
+        channel: slack
+        avg_duration_hours: 2
+      - id: generate_visuals
+        name: "Render Mockups"
+        owner: designer-agent
+        channel: slack
+        avg_duration_hours: 6
+      - id: cd_review
+        name: "Creative Director Quality Check"
+        owner: kabir-creative-director
+        channel: slack
+        avg_duration_hours: 12
+        threshold_hours: 24
+
+  - id: client-approval
+    name: "Client Feedback and Campaign Launch"
+    description: "Presenting assets to the client and launching if approved"
+    state: "active"
+    owner: ananya-account-manager
+    steps:
+      - id: present_assets
+        name: "Share Deliverables"
+        owner: ananya-account-manager
+        channel: email
+        avg_duration_hours: 1
+      - id: client_feedback
+        name: "Client Review & Feedback Loop"
+        owner: ananya-account-manager
+        channel: whatsapp
+        avg_duration_hours: 48
+        threshold_hours: 24
+      - id: launch_campaign
+        name: "Deploy Ads Live"
+        owner: ananya-account-manager
+        channel: email
+        avg_duration_hours: 2
+
+goals:
+  - id: billed-hours-goal
+    title: "Reach 500 Monthly Billed Hours"
+    metric: "billed_hours"
+    target_value: 500
+    current_value: 410
+    unit: "hours"
+    deadline: "2026-06-30"
+    owner: ananya-account-manager
+    health: "on_track"
+
+  - id: client-retention-goal
+    title: "Maintain Client Retention Rate > 95%"
+    metric: "retention_rate"
+    target_value: 95
+    current_value: 92
+    unit: "percentage"
+    deadline: "2026-12-31"
+    owner: ananya-account-manager
+    health: "at_risk"
+    health_reason: "Slow feedback turnaround on campaign-launch workflows"
+
+integrations:
+  - id: client-whatsapp-hub
+    type: "whatsapp"
+    description: "Client feedback chats"
+  - id: project-excel-tracker
+    type: "excel"
+    path: "./data/project_hours_tracker.xlsx"
